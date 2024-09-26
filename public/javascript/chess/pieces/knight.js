@@ -6,6 +6,10 @@ var Knight = function(config){
 Knight.prototype = new Piece({});
 Knight.prototype.moveTo = function(newPosition, getPieceAt){
     if (this.isValidMove(newPosition)) {
+        let capturedPiece = getPieceAt(newPosition);
+        if (capturedPiece && capturedPiece.color !== this.color) {
+            this.kill(capturedPiece);
+        }
         this.position = newPosition.col + newPosition.row;
         this.render();
         return true;

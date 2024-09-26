@@ -62,14 +62,23 @@ Board.prototype.boardClicked = function(event){
     this.clearSelection();    
     const clickedCell = this.getClickedBlock(event);
     const selectedPiece = this.getPieceAt(clickedCell)
-    if(selectedPiece){
+    if(selectedPiece && selectedPiece.color === this.currentTurn){
         //Add 'selected' class to the clicked piece    
         this.selectPiece(event.target, selectedPiece);
     }else{
         //update position of the selected piece to new position
-        if(this.selectedPiece){
-            this.selectedPiece.moveTo(clickedCell);        
-        }                
+        console.log(this.selectedPiece);
+        if (this.selectedPiece)
+        {   
+            let isValidMove = this.selectedPiece.moveTo(clickedCell, this.getPieceAt);
+            if (isValidMove)
+            {
+                console.log("Hello wassup.");
+                this.toggleTurn();
+            }
+            this.selectedPiece = null;
+            this.clearSelection();
+        }               
     }    
 }
 
