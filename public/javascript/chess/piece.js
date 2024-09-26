@@ -43,5 +43,20 @@ Piece.prototype.render = function(){
 }
 
 Piece.prototype.kill = function(targetPiece){
-    console.log("Method not implemeted by: " + typeof(this));
+    if (targetPiece && targetPiece.$el && targetPiece.$el.parentNode){
+        // Remove the target piece from the board
+        targetPiece.$el.parentNode.removeChild(targetPiece.$el);
+
+        let capturedArea = document.getElementById('captured-pieces');
+        if (capturedArea)
+        {
+            capturedArea.appendChild(targetPiece.$el);
+        }
+        else {
+            console.warn('Captured pieces area not found');
+        }
+    }
+    else {
+        console.warn('Target piece not found or already removed');
+    }
 }
